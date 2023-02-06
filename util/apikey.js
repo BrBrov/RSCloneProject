@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 
 
 async function apiKey(id, key) {
-  const url = 'mongodb://127.0.0.1:27017';
+  const url = 'mongodb+srv://vercel-admin-user:mCO59EHkQ0e3MfAQ@rsclone.ackgmtt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
   const client = new MongoClient(url);
   const db = client.db('rsclone');
   const col = db.collection('dbUser');
