@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "mongodb": "^5.0.0",
+    "nodemon": "^2.0.20"
+  },
+  "name": "rsclone-server",
+  "description": "RSClone",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrBrov/RSCloneProject.git"
+  },
+  "keywords": [
+    "RSClone"
+  ],
+  "author": "BrBrov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrBrov/RSCloneProject/issues"
+  },
+  "homepage": "https://github.com/BrBrov/RSCloneProject#readme"
+}

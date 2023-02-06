@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 100%;
+    min-height: 100vh;
+}
+
+.page {
+    max-width: 1200px;
+    min-height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.header {
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: aqua;
+}
+
+.user {
+    margin-top: 10px;
+    margin-right: 50px;
+    text-align: center;
+}
+
+.user-name {
+    font-size: 1.5em;
+    color: blue;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.player {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    justify-content: center;
+    background-color: blue;
+}
+
+.play {
+    width: 60px;
+    height: 20px;
+    text-align: center;
+    align-self: center;
+    color: aqua;
+}
+
+.auth {
+   display: flex;
+   flex-direction: row;
+   justify-content: stretch;
+   gap: 50px; 
+}
+
+.log {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
