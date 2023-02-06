@@ -7,14 +7,28 @@ function toArrBuffer(str) {
   return arrBuffer;
 }
 
+const context = new AudioContext(); 
+let audioBuffer;
+let audioData;
+let destination;
 
-const btnLeft = document.querySelector('.play');
+const btnPlay = document.querySelector('.play');
 
-btnLeft.addEventListener('click', async () => {
-  console.log('Play');
-  const fet = await fetch('/play?token=1', { method: 'GET' });
-  const resp = await fet.text();
-  console.log(resp);
+btnPlay.addEventListener('click', async () => {
+  if (btnPlay.textContent === 'Play') {
+    const id = btnPlay.dataset.id;
+    const fet = await fetch(`/play?token=${id}`, { method: 'GET' });
+    const resp = await fet.blob();
+    context.decodeAudioData(resp, (decodedArrayBuffer) => {
+      audioBuffer = decodedArrayBuffer;
+    });
+    audioData = context.createBufferSource();
+    audioSource.buffer = audioData;
+    destination = context.destination;
+    audioSource.connect(destination);
+    audioSource.start(0);
+  }
+
 });
 
 const btnSignUP = document.querySelector('.sign-up');

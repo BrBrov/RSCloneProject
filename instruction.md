@@ -23,4 +23,3 @@
 #### and Query param ?mode=enter, and body with password and login hashes encryted with AES-CBC
 ## 3
 #### Response witn token of autorization or { token: 'Wrong passord!' } or  { token: 'Unregistered!'} in JSON format
-
