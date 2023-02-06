@@ -16,4 +16,4 @@ app.use('/login', auth);
 
 app.use('/auth', login);
 
-app.listen(port, () => console.log(`${port}`));
+app.listen(port, () => console.log(`Server on localhost:${port}`));
