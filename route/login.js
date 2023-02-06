@@ -51,9 +51,14 @@ router.route('')
 
     console.log(apiKey);
 
-    if (!apiKey) {
-      res.status(404);
-      res.json({ token: 'Unregistered!' });
+    if (!apiKey) {      
+      if (apiKey === null){
+        res.status(401);
+        res.json({ token: 'Wrong passord!' });
+        return;
+      }
+      res.status(403);
+      res.json({ token: 'Unregistered!'});
       return;
     }
 

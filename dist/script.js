@@ -147,6 +147,9 @@ btnSignIn.addEventListener('click', async () => {
     case 'Unregistered!':
       outEl.textContent = 'Unregistered!';
       break;
+    case 'Wrong passord!':
+      outEl.textContent = 'Wrong passord!';
+      break;
     default:
       let token = await window.crypto.subtle.decrypt(
         {
