@@ -49,12 +49,13 @@ router.route('')
 
     const apiKey = await getKey(login, userPassHash);
 
+    console.log(apiKey);
+
     if (!apiKey) {
       res.status(404);
       res.json({ token: 'Unregistered!' });
+      return;
     }
-
-    console.log(apiKey);
 
     const tokenChif = await crypto.webcrypto.subtle.encrypt(
       {

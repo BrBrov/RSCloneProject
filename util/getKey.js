@@ -9,6 +9,7 @@ async function getKey(id, key) {
   const col = db.collection('dbUser');
 
   const user = await col.findOne({ "user": id, "pass": key});
+  console.log(user);
 
   if (!user) {
     return false;
