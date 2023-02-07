@@ -12,11 +12,11 @@ async function indexer() {
 
   await col.insertOne({
     id: '1',
-    artist: 'Бахыр Компот',
-    title: 'Драконы победят',
+    artist: 'O.M.S.K. Phonk',
+    title: 'Смешарики',
     year: '2021',
     genre: 'rock',
-    file: '1.mp3',
+    file: 'http://cdn15.deliciouspeaches.com/get/cuts/04/84/0484f7d96568e8c70efd655a4bec447a/75371957/Smeshariki_-_OMSK_Phonk_b128f0d92.mp3',
     logo: ''
   })
 

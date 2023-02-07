@@ -19,10 +19,8 @@ router.route('')
       return;
     }
 
-    const trackPath = path.resolve(__dirname, '..', './source/tracks', `${track.file}`);
-
     res.status(200);
-    res.sendFile(trackPath);
+    res.json(track);
   })
 
 module.exports = router;

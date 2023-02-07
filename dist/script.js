@@ -25,7 +25,13 @@ btnPlay.addEventListener('click', async () => {
 			return;
 		}
 
-		const resp = await fet.arrayBuffer();
+		resp = await fet.json();
+
+		const url = new URL(resp.file);
+
+		fet = await fetch(url, {method: 'GET'});
+
+		resp = await fet.arrayBuffer();
 
 		console.log(resp);
 		context.decodeAudioData(resp, (decodedArrayBuffer) => {
