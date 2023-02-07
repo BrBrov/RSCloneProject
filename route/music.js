@@ -20,7 +20,7 @@ router.route('')
     }
 
     res.status(200);
-    res.json(track);
+    res.jsoncd(track);
   })
 
 module.exports = router;

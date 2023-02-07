@@ -44,20 +44,13 @@ body {
     gap: 50px;
 }
 
-.player {
+.songs {
     display: flex;
-    width: 100px;
-    height: 100px;
-    justify-content: center;
-    background-color: blue;
+    flex-direction: column;
 }
 
-.play {
-    width: 60px;
-    height: 20px;
-    text-align: center;
-    align-self: center;
-    color: aqua;
+.track {
+    display: flex;
 }
 
 .auth {
