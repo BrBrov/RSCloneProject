@@ -51,7 +51,76 @@ body {
 
 .track {
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
 }
+
+.song-logo {
+    width: 70px;
+    height: 70px;
+}
+
+.artisi-img {
+    width: 100%;
+    height: 100%;
+}
+
+.play-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.controlls-btn {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.play,
+.stop {
+    width: 80px;
+    height: 30px;
+    color: rgb(22, 19, 238);
+}
+
+.vol-min,
+.vol-max {
+    display: block;
+    width: 20px;
+    height: 10px;
+    color: brown;
+}
+
+.volume {
+    width: 100px;
+}
+
+.track-navigate {
+    display: flex;
+    height: 30px;
+    flex-direction: row;
+    text-align: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.current-position,
+.duration {
+    align-self: center;
+    display: block;
+    width: 50px;
+}
+
+.navigate {
+    width: 150px;
+}
+
 
 .auth {
    display: flex;
