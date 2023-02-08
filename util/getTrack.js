@@ -8,7 +8,9 @@ async function getTrack(id) {
   const db = client.db('rsclone');
   const col = db.collection('dbMusic');
 
-  const track = await col.findOne({id: id});
+  const track = await col.findOne({id: Number(id)});
+
+	console.log(track);
 
   if (!track) {
     return null;
