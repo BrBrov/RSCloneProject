@@ -63,6 +63,10 @@
 #### Reguest GET on /random?limit=<number limit>
 #### Response JSON
 
+### Search
+#### Reguest GET on /search?string = <query search>
+#### Response JSON
+
 ### Get playlist
 #### Request GET on /playlist?user=<login in hash>&token=<token>
 #### Response JSON 
