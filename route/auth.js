@@ -2,11 +2,12 @@ const express = require('express');
 const parser = require('body-parser');
 const crypto = require('crypto');
 const router = express.Router();
+const chifer = require('../util/crypto');
 const register = require('../util/register');
 const apiKey = require('../util/apikey');
 
 
-let keyAES;
+let key;
 let iv;
 
 router.use(parser.json());
@@ -14,13 +15,9 @@ router.use(parser.json());
 router.route('')
 
   .get(async (req, res) => {
+    key = await chifer.getKey();
 
-    keyAES = await crypto.webcrypto.subtle.generateKey({
-      name: 'AES-CBC',
-      length: 128
-    }, true, ['encrypt', 'decrypt']);
-
-    const exportKey = await crypto.webcrypto.subtle.exportKey("jwk", keyAES);
+    const exportKey = await chifer.exportKey(key);
 
     res.status(200);
     res.json(exportKey);
@@ -30,24 +27,20 @@ router.route('')
     if (req.query.mode !== 'register') return;
 
     let login = new Uint8Array(req.body.id.split(','));
-    const passChif = new Uint8Array(req.body.data.split(','));
+    const passChif = new Uint8Array(req.body.pass.split(','));
+    const user = req.body.login;
+
     iv = req.header('authorization').slice(9).split(',');
     iv = new Uint8Array(iv);
 
-    let userPassHash = await crypto.webcrypto.subtle.decrypt(
-      {
-        name: "AES-CBC",
-        iv: iv,
-      },
-      keyAES,
-      passChif
-    );
-
-    userPassHash = new Uint8Array(userPassHash);
-    userPassHash = userPassHash.join('');
+    let userPassHash = await chifer.decript(passChif, key, iv);
+    userPassHash = new Uint8Array(userPassHash).join('');
     login = login.join('');
 
-    const reg = await register(login, userPassHash);
+    // console.log('loginHash', login);
+    console.log('passHash', userPassHash);
+
+    const reg = await register(login, userPassHash, user);
 
     if (reg) {
       crypto.randomFill(new Buffer.alloc(16), async (err, buffer) => {
@@ -58,21 +51,24 @@ router.route('')
         }
         const token = new Uint8Array(buffer);
         const tokenString = token.join(',');
+        const keyString = token.join('');
 
-        const result = await apiKey(login, tokenString);
+        const result = await apiKey(login, tokenString,keyString );
 
         if (result) {
           res.status(200);
-          const tokenChif = await crypto.webcrypto.subtle.encrypt(
-            {
-              name: "AES-CBC",
-              iv: iv,
-            },
-            keyAES,
-            token
-          );
+          const tokenChif = await chifer.encript(token, key, iv);
 
-          res.json({register: new Uint8Array(tokenChif).join(',')});
+          let apiToken = new Uint8Array(tokenChif).join(',');
+
+          console.log(apiToken);
+
+          let answer = {};
+          answer.register = apiToken,
+          answer.user = user
+         
+          console.log(apiToken);
+          res.json(answer);
           return;
         }
         res.status(500);

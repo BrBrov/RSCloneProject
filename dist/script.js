@@ -1,70 +1,55 @@
+let { log } = console;
+
 function toArrBuffer(str) {
-  const arrBuffer = new ArrayBuffer(str.length);
-  const int8Arr = new Uint8Array(arrBuffer);
-  for (let i = 0, strLen = str.length; i < strLen; i++) {
-    int8Arr[i] = str.charCodeAt(i);
+  let buf = new ArrayBuffer(str.length * 2);
+  let buf8Arr = new Uint8Array(buf);
+  for (let index = 0; index < str.length; index++) {
+    buf8Arr[index] = str.charCodeAt(index);
   }
-  return arrBuffer;
+  return buf;
 }
 
-const context = new AudioContext();
-let audioBuffer;
-let audioSource;
-let destination;
-let volume;
-let id;
-let isPlay = false;
+async function importKey(key) {
+    const imKey = await window.crypto.subtle.importKey(
+      'jwk',
+      key,
+      'AES-CBC',
+      true,
+      ["encrypt", "decrypt"]);
+    return imKey;
+}
 
-const songs = document.querySelector('.songs');
+async function getHash(str) {
+  const arrBuff = toArrBuffer(str);
+  let hash = await crypto.subtle.digest('SHA-256', arrBuff);
+  return hash ? hash : null;
+}
 
-songs.addEventListener('click', async (ev) => {
-  switch (ev.target.className) {
-    case 'play':
-      if (isPlay && ev.target.dataset.id === id) {
-        audioSource.stop();
-        audioSource.start(0)
-      }
-      if (audioSource) {
-        audioSource.stop();
-      }
-      isPlay = true;
-      id = ev.target.dataset.id;
-      let fet = await fetch(`/play?id=${id}`, { method: 'GET' });
-      if (fet.status !== 200) {
-        const resp = await fet.json();
-        return;
-      }
+async function encrypt(data, key, subKey) {
+  const hashChif = await window.crypto.subtle.encrypt(
+    {
+      name: "AES-CBC",
+      iv: subKey,
+    },
+    key,
+    data
+  );
 
-      resp = await fet.json();
+  return hashChif ? hashChif : null;
+}
 
-      const url = new URL(resp.file);
+async function decript(data, key, subKey) {
+  let decData = await window.crypto.subtle.decrypt(
+    {
+      name: "AES-CBC",
+      iv: subKey,
+    },
+    key,
+    data
+  );
 
-      fet = await fetch(url, { method: 'GET' });
-
-      resp = await fet.arrayBuffer();
-
-      console.log(resp);
-      context.decodeAudioData(resp, (decodedArrayBuffer) => {
-        audioBuffer = decodedArrayBuffer;
-        audioSource = context.createBufferSource();
-        audioSource.buffer = audioBuffer;
-        destination = context.destination;
-        volume = context.createGain();
-        volume.gain.value = 0.5;
-        audioSource.connect(volume);
-        volume.connect(destination);
-        audioSource.start(0);
-      })
-
-      break;
-    case 'stop':
-      if (ev.target.dataset.id === id) {
-        isPlay = false;
-        audioSource.stop();
-      }      
-      break;
-  }
-});
+  return decData ? decData : null;
+}
 
 const btnSignUP = document.querySelector('.sign-up');
 
@@ -74,29 +59,25 @@ btnSignUP.addEventListener('click', async () => {
 
   const login = inLogin.value;
   const pass = inPass.value;
-  const hash = await crypto.subtle.digest('SHA-256', toArrBuffer(pass));
-  const idHash = await crypto.subtle.digest('SHA-256', toArrBuffer(login));
+  const hash = await getHash(pass)
+  const idHash = await getHash(login);
+
+  log(new Uint8Array(hash).toString());
 
   let req = await fetch('/login', { method: 'GET' });
   let resp = await req.json();
 
   const iv = window.crypto.getRandomValues(new Uint8Array(16));
 
-  const key = await window.crypto.subtle.importKey(
-    'jwk',
-    resp,
-    'AES-CBC',
-    true,
-    ["encrypt", "decrypt"]);
+  const key = await importKey(resp);
 
-  const hashChif = await window.crypto.subtle.encrypt(
-    {
-      name: "AES-CBC",
-      iv: iv,
-    },
-    key,
-    hash
-  );
+  const hashChif = await encrypt(hash, key, iv);
+
+  let body = JSON.stringify({
+      pass: new Uint8Array(hashChif).toString(),
+      id: new Uint8Array(idHash).toString(),
+      login: login
+    })
 
   req = await fetch('/login?mode=register', {
     method: 'POST',
@@ -104,14 +85,13 @@ btnSignUP.addEventListener('click', async () => {
       'Authorization': `Register ${iv}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      data: new Uint8Array(hashChif).toString(),
-      id: new Uint8Array(idHash).toString()
-    })
+    body: body
   })
 
   resp = await req.json();
+
   const outEl = document.querySelector('.output');
+
   switch (resp.register) {
     case 'none':
       outEl.textContent = 'User already has been registered!';
@@ -123,16 +103,13 @@ btnSignUP.addEventListener('click', async () => {
       outEl.textContent = 'Cannot create apiKey!';
       break;
     default:
-      let token = await window.crypto.subtle.decrypt(
-        {
-          name: "AES-CBC",
-          iv: iv,
-        },
-        key,
-        new Uint8Array(resp.register.split(','))
-      );
+      let token = new Uint8Array(resp.register.split(','));
+      
+      token = await decript(token, key, iv);
+
       outEl.textContent = new Uint8Array(token).join('');
-      localStorage.setItem('token', `${token}`);
+      localStorage.setItem('token', new Uint8Array(token).join(''));
+      localStorage.setItem('user', `${resp.user}`);
       break;
   }
 })
@@ -145,29 +122,23 @@ btnSignIn.addEventListener('click', async () => {
 
   const login = inLogin.value;
   const pass = inPass.value;
-  const hash = await crypto.subtle.digest('SHA-256', toArrBuffer(pass));
-  const idHash = await crypto.subtle.digest('SHA-256', toArrBuffer(login));
+  const hash = await getHash(pass);
+  const idHash = await getHash(login);
+
+  log('passHash: ', hash);
+  log('loginHash: ', idHash)
 
   let req = await fetch('/auth', { method: 'GET' });
   let resp = await req.json();
 
   const iv = window.crypto.getRandomValues(new Uint8Array(16));
 
-  const key = await window.crypto.subtle.importKey(
-    'jwk',
-    resp,
-    'AES-CBC',
-    true,
-    ["encrypt", "decrypt"]);
+  log('iv: ', iv);
 
-  const hashChif = await window.crypto.subtle.encrypt(
-    {
-      name: "AES-CBC",
-      iv: iv,
-    },
-    key,
-    hash
-  );
+  const key = await importKey(resp);
+
+  const hashChif = await encrypt(hash, key, iv);
+  const idHashChif = await encrypt(idHash, key, iv);
 
   req = await fetch('/auth?mode=enter', {
     method: 'POST',
@@ -177,7 +148,7 @@ btnSignIn.addEventListener('click', async () => {
     },
     body: JSON.stringify({
       data: new Uint8Array(hashChif).toString(),
-      id: new Uint8Array(idHash).toString()
+      id: new Uint8Array(idHashChif).toString()
     })
   })
 
@@ -197,17 +168,15 @@ btnSignIn.addEventListener('click', async () => {
       outEl.textContent = 'Wrong passord!';
       break;
     default:
-      let token = await window.crypto.subtle.decrypt(
-        {
-          name: "AES-CBC",
-          iv: iv
-        },
-        key,
-        new Uint8Array(tokenChiff)
-      );
+      let token = new Uint8Array(tokenChiff);
+      token = await decript(token, key, iv);
+
+      token = new Uint8Array(token).join('');
+
       console.log(token);
-      outEl.textContent = new Uint8Array(token).join('');
+      outEl.textContent = token;
       localStorage.setItem('token', `${token}`);
+      localStorage.setItem('user', resp.user);
       break;
   }
 })

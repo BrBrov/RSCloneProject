@@ -7,7 +7,6 @@ async function getKey(id, key) {
   const col = db.collection('dbUser');
 
   const user = await col.findOne({ "user": id, "pass": key});
-  console.log('user->', user);
 
   if (!user) {
     const account = await col.findOne({'user': id});
@@ -18,7 +17,7 @@ async function getKey(id, key) {
   }
 
   await client.close();
-  return user.apiKey;
+  return [user.apiKeyArr, user.login];
 }
 
 module.exports = getKey;

@@ -85,7 +85,7 @@
 	{...}
 ]}
 ```
-# Operations wtuh playlist
+# Operations with playlist
 
 ### Add song into playlist
 #### Request POST on /playlist?user=<login in hash>&token=<token>
