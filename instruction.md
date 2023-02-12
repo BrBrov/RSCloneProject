@@ -27,7 +27,7 @@
 
 ### Get one track
 
-#### Requst GET on /play with query ?id=<number of track>
+#### Requst GET on /play?id=<id of track>
 #### Response JSON as 
 ```
   {
@@ -61,6 +61,10 @@
 
 ### Get random tracks
 #### Reguest GET on /random?limit=<number limit>
+#### Response JSON
+
+### Get random tracks with genre sorting
+#### Reguest GET on /style?genre=<name of genre>&limit=<number limit>
 #### Response JSON
 
 ### Search
