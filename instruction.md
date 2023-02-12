@@ -74,7 +74,8 @@
 
 #### Response JSON 
 ```
-{traks: [
+{ id: <hash login>,
+	traks: [
 	{
 		"id": 2,
 	  "artist": "Oliver Tree & Robin Schulz",
@@ -86,17 +87,22 @@
 	{...},
 	...
 	{...}
-],
-songsID: [2,4,5....102,284]
+  ],
+  songsID: [2,4,5....102,284]
 }
 ```
 
 
 ### Add song into playlist
-#### Request POST on /playlist?user=<login in hash>&token=<token>
+#### Request POST on /playlist?user=<login>&token=<token>
 #### BODY {id: <id track>}
 #### Response JSON all playlist
 
 ### Delete song from playlist
-#### Requst DELETE /playlist?id=<id song>$user=<login in hash>&token=<token>
+#### Requst PUT /playlist?user=<login>&token=<token>
+#### Body : id of track
 #### Response JSON all playlist
+
+### Delete playlist 
+#### Request DELETE /playlist?user=<login>&token=<token>
+#### Response JSON result
