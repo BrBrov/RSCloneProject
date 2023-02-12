@@ -28,7 +28,6 @@ router.route('')
 
 	})
 	.post(async (req, res) => {
-		console.log('++++');
 		let user = req.query.user;
 		let token = req.query.token;
 		let idTrack = req.body.id;
@@ -84,10 +83,11 @@ router.route('')
 
 			res.status(404);
 			res.json({ pls: 'Not found!' });
+			return;
 		}
 
 		res.status(200);
-		res.json({ pls: result });
+		res.json({ pls: 'Done'});
 	})
 
 module.exports = router;
