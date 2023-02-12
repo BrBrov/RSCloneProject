@@ -176,7 +176,7 @@ btnSignIn.addEventListener('click', async () => {
       console.log(token);
       outEl.textContent = token;
       localStorage.setItem('token', `${token}`);
-      localStorage.setItem('user', resp.user);
+      localStorage.setItem('user', resp.login);
       break;
   }
 })

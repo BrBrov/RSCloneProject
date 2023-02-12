@@ -67,8 +67,11 @@
 #### Reguest GET on /search?string = <query search>
 #### Response JSON
 
+
+# Operations with playlist
 ### Get playlist
 #### Request GET on /playlist?user=<login in hash>&token=<token>
+
 #### Response JSON 
 ```
 {traks: [
@@ -83,9 +86,11 @@
 	{...},
 	...
 	{...}
-]}
+],
+songsID: [2,4,5....102,284]
+}
 ```
-# Operations with playlist
+
 
 ### Add song into playlist
 #### Request POST on /playlist?user=<login in hash>&token=<token>
