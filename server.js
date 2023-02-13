@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const start = require('./route/start');
 const music = require('./route/music');
 const auth = require('./route/auth');
@@ -10,8 +11,10 @@ const playlist = require('./route/playlist');
 const genre = require('./route/genre');
 const app = express();
 
-// const host = '127.0.0.1';
-const port = 8080 || process.env;
+const host = '127.0.0.1';
+const port = 8081 || process.env;
+
+app.use(cors());
 
 app.use('', start);
 
@@ -31,4 +34,4 @@ app.use('/playlist', playlist);
 
 app.use('/style', genre);
 
-app.listen(port, () => console.log(`Server on localhost:${port}`));
+app.listen(port, host, () => console.log(`Server on localhost:${port}`));
