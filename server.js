@@ -13,7 +13,7 @@ const app = express();
 // const host = '127.0.0.1';
 const port = 8080 || process.env;
 
-app.use(['/', '/style.css', '/script.css'], start);
+app.use('', start);
 
 app.use('/play', music);
 
