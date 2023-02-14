@@ -7,6 +7,9 @@ async function genre(genre, page, limit) {
   const musicDB = db.collection('dbMusic');
 
 	// const cursorData = await musicDB.aggregate([{$match:{genre: genre}}, {$sample: {size: Number(limit)}}]);
+	const count = await musicDB.find({$text: {$search: genre}});
+	let len = await count.toArray();
+
 	const cursorData = await musicDB.find({genre: genre}, { skip: Number(page), limit: Number(limit) + 1 });
 
 	const tracks = await cursorData.toArray();
@@ -17,7 +20,8 @@ async function genre(genre, page, limit) {
 	}
 
 	client.close();
-	return tracks;
+	return {tracks: tracks,
+		count: len.length};
 }
 
 module.exports = genre;
