@@ -34,7 +34,8 @@ router.get('', async (req, res) =>{
 	}
 	
 	res.status(200);
-	res.json({tracks: tracks});
+	res.setHeader('cpunt', `${tracks.count}`);
+	res.json({tracks: tracks.tracks});
 })
 
 module.exports = router;
