@@ -1,12 +1,13 @@
 const { MongoClient } = require('mongodb');
 
-async function genre(genre, limit) {
+async function genre(genre, page, limit) {
   const url = 'mongodb+srv://vercel-admin-user:mCO59EHkQ0e3MfAQ@rsclone.ackgmtt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
   const client = new MongoClient(url);
   const db = client.db('rsclone');
-  const col = db.collection('dbMusic');
+  const musicDB = db.collection('dbMusic');
 
-	const cursorData = await col.aggregate([{$match:{genre: genre}}, {$sample: {size: Number(limit)}}]);
+	// const cursorData = await musicDB.aggregate([{$match:{genre: genre}}, {$sample: {size: Number(limit)}}]);
+	const cursorData = await musicDB.find({genre: genre}, { skip: Number(page), limit: Number(limit) + 1 });
 
 	const tracks = await cursorData.toArray();
 

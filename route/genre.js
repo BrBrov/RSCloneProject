@@ -4,7 +4,8 @@ const router = express.Router();
 
 router.get('', async (req, res) =>{
 	const genre = req.query.genre;
-	let limit = req.query.limit;
+	let limit = Number(req.query.limit);
+	let page = Number(req.query.page);
 
 	if(!genre) {
 		res.status(401);
@@ -12,11 +13,19 @@ router.get('', async (req, res) =>{
 		return;
 	}
 
-	if(!limit) {
-		limit = '10';
+	if (page < 0) {
+		page = 0;
 	}
 
-	const tracks = await getGenre(genre, limit);
+	if (page >= 1) {
+		page = page - 1;
+	}
+
+	if(!limit) {
+		limit = 10;
+	}
+
+	const tracks = await getGenre(genre, page, limit);
 	
 	if(!tracks) {
 		res.status(404);
