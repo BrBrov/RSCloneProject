@@ -64,7 +64,7 @@
 #### Response JSON
 
 ### Get random tracks with genre sorting
-#### Reguest GET on /style?genre=<name of genre>&limit=<number limit>
+#### Reguest GET on /style?genre=<name of genre>&page=<number page>&limit=<number limit>
 #### Response JSON
 
 ### Search
