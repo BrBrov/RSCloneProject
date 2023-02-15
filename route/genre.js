@@ -34,7 +34,7 @@ router.get('', async (req, res) =>{
 	}
 	
 	res.status(200);
-	res.setHeader('cpunt', `${tracks.count}`);
+	res.setHeader('X-Total-Count', `${tracks.count}`);
 	res.json({tracks: tracks.tracks});
 })
 
