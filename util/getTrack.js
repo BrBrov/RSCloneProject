@@ -10,8 +10,6 @@ async function getTrack(id) {
 
   const track = await col.findOne({id: Number(id)});
 
-	console.log(track);
-
   if (!track) {
     return null;
   }
