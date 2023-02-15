@@ -52,8 +52,6 @@ router.route('')
       return;
     }
 
-    console.log(apiKey[0]);
-
     const apiKeyArrBuf = new Uint8Array(apiKey[0].split(','));
     const tokenChif = await chifer.encript(apiKeyArrBuf, key, iv);
 

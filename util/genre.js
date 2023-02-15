@@ -10,7 +10,7 @@ async function genre(genre, page, limit) {
 	const count = await musicDB.find({$text: {$search: genre}});
 	let len = await count.toArray();
 	
-	const cursorData = await musicDB.find({genre: genre}, { skip: Number(page), limit: Number(limit) + 1 });
+	const cursorData = await musicDB.find({genre: genre}, { skip: Number(page) * 10, limit: Number(limit) });
 
 	const tracks = await cursorData.toArray();
 

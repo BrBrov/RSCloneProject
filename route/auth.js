@@ -67,7 +67,6 @@ router.route('')
           answer.register = apiToken,
           answer.user = user
          
-          console.log(apiToken);
           res.json(answer);
           return;
         }
