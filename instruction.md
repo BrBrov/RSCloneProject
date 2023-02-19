@@ -23,7 +23,8 @@
 #### and Query param ?mode=enter, and body with password and login hashes encryted with AES-CBC
 ## 3
 #### Response witn token of autorization or { token: 'Wrong passord!' } or  { token: 'Unregistered!'} in JSON format
-## 1
+
+## Work with music
 
 ### Get one track
 
@@ -73,7 +74,7 @@
 #### Response JSON
 
 
-# Operations with playlist
+## Operations with playlist
 ### Get playlist
 #### Request GET on /playlist?user=<login in hash>&token=<token>
 
@@ -111,3 +112,13 @@
 ### Delete playlist 
 #### Request DELETE /playlist?user=<login>&token=<token>
 #### Response JSON result
+
+## Operation with songs rate
+
+#### Set Up song rate POST /rate
+#### BODY id:<id song>
+#### Header: Content-Type: application/json
+#### Return true or false
+
+#### Get list of songs with rate GET /rate?limit=<number of limit>
+#### Return JSON result
