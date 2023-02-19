@@ -8,6 +8,7 @@ const random = require('./route/random');
 const search = require('./route/search');
 const playlist = require('./route/playlist');
 const genre = require('./route/genre');
+const rate = require('./route/rate');
 const app = express();
 
 // const host = '127.0.0.1';
@@ -30,5 +31,7 @@ app.use('/search', search);
 app.use('/playlist', playlist);
 
 app.use('/style', genre);
+
+app.use('/rate', rate);
 
 app.listen(port, () => console.log(`Server on localhost:${port}`));
