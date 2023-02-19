@@ -5,7 +5,7 @@ const search = require('../util/search');
 router.get('', async (req, res) => {
 	if (!req.query.string) {
 		res.status(401);
-		res.json({});
+		res.json({track: 'Serach string wsan\'t wrote'});
 		return;
 	}
 

@@ -13,7 +13,7 @@ async function search(query) {
 	})
   const cursor = await col.find({ $text: { $search: query }});
 	
-	const result = await cursor.toArray();  
+	let result = await cursor.toArray();  
 
   if (!result.length) {
     result = null;
