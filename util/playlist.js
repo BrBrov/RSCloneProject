@@ -9,7 +9,7 @@ async function getPls(user, token) {
 	const userDB = db.collection('dbUser');
 	const musicDB = db.collection('dbMusic');
 
-	const userData = await userDB.findOne({ token: token, user: user });
+	const userData = await userDB.findOne({"login": `qqq`, "apiKey": `12196210851313013683231112176474456123`});
 
 	if (!userData) {
 		client.close();
@@ -143,7 +143,6 @@ async function deletePls(user, token) {
 	const userDB = db.collection('dbUser');
 
 	const userData = await userDB.findOne({ apiKey: token, login: user });
-  console.log(userData);
 
 	if (!userData) {
 		client.close();
@@ -151,14 +150,13 @@ async function deletePls(user, token) {
 	}
 
 	const plsData = await plsDB.findOne({ id: userData.user });
-  console.log(plsData);
+
 	if (!plsData) {
 		client.close();
 		return false;
 	}
 
 	const result = await plsDB.deleteOne({id: plsData.id});
-	console.log(result.deletedCount)
 	client.close();
 	return result;
 }

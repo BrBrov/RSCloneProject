@@ -8,6 +8,7 @@ router.route('')
 	.get(async (req, res) => {
 		let limit = req.query.limit;
 
+		console.log(limit);
 		if (!limit) {
 			limit = '10';
 		}

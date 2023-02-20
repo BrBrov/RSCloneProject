@@ -6,11 +6,11 @@ async function genre(genre, page, limit) {
   const db = client.db('rsclone');
   const musicDB = db.collection('dbMusic');
 
-	// const cursorData = await musicDB.aggregate([{$match:{genre: genre}}, {$sample: {size: Number(limit)}}]);
+	// const countData = await musicDB.aggregate([{$match:{genre: genre}}, {$sample: {size: Number(limit)}}]);
 	const count = await musicDB.find({$text: {$search: genre}});
 	let len = await count.toArray();
-
-	const cursorData = await musicDB.find({genre: genre}, { skip: Number(page) * limit, limit: Number(limit)});
+	
+	const cursorData = await musicDB.find({genre: genre}, { skip: Number(page) * limit, limit: Number(limit) });
 
 	const tracks = await cursorData.toArray();
 

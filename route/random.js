@@ -6,8 +6,6 @@ router.get('', async (req, res) => {
 
 	const track = await getRandomTracks(req.query.limit);
 
-	console.log(track.length);
-
 	if (!track) {
 		res.status(404);
 		res.json({ track: 'Not found' });

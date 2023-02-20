@@ -23,7 +23,6 @@ async function decript(data, key, subKey) {
     key,
     data
   );
-  console.log(decData);
   return decData;
 }
 

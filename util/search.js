@@ -18,7 +18,7 @@ async function search(query) {
   if (!result.length) {
     result = null;
   }
-
+	
   await client.close();
   return result;
 }

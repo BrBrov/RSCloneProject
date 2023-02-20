@@ -23,6 +23,7 @@ async function add() {
 				file.file = lette.hub.actions[1].uri;
 			}
 			file.logo = lette.share.image;
+			file.rate = 0;
 			await col.insertOne(file);
 		}
 	}

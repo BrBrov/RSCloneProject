@@ -37,9 +37,6 @@ router.route('')
     userPassHash = new Uint8Array(userPassHash).join('');
     login = login.join('');
 
-    // console.log('loginHash', login);
-    console.log('passHash', userPassHash);
-
     const reg = await register(login, userPassHash, user);
 
     if (reg) {
@@ -61,13 +58,10 @@ router.route('')
 
           let apiToken = new Uint8Array(tokenChif).join(',');
 
-          console.log(apiToken);
-
           let answer = {};
           answer.register = apiToken,
           answer.user = user
          
-          console.log(apiToken);
           res.json(answer);
           return;
         }
