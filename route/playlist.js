@@ -10,10 +10,9 @@ router.route('')
 		let user = req.query.user;
 		let token = req.query.token;
 
-		const playlist = await pls.getPls();
-
+		const playlist = await pls.getPls(user, token);
 		if (!playlist) {
-			if (result === null) {
+			if (playlist === null) {
 				res.status(500);
 				res.json({ pls: 'Internal server error!' });
 				return;
@@ -25,7 +24,6 @@ router.route('')
 
 		res.status(200);
 		res.json({ pls: playlist });
-
 	})
 	.post(async (req, res) => {
 		let user = req.query.user;
@@ -87,7 +85,7 @@ router.route('')
 		}
 
 		res.status(200);
-		res.json({ pls: 'Done'});
+		res.json({ pls: 'Done' });
 	})
 
 module.exports = router;
