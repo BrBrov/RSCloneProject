@@ -3,8 +3,6 @@ const parser = require('body-parser');
 const pls = require('../util/playlist');
 const router = express.Router();
 
-router.use(parser.json());
-
 router.route('')
 	.get(async (req, res) => {
 		let user = req.query.user;
@@ -25,7 +23,7 @@ router.route('')
 		res.status(200);
 		res.json({ pls: playlist });
 	})
-	.post(async (req, res) => {
+	.post(parser.json() ,async (req, res) => {
 		let user = req.query.user;
 		let token = req.query.token;
 		let idTrack = req.body.id;
@@ -45,7 +43,7 @@ router.route('')
 		res.status(200);
 		res.json({ pls: result });
 	})
-	.put(async (req, res) => {
+	.put(parser.json(), async (req, res) => {
 		let user = req.query.user;
 		let token = req.query.token;
 		let idTrack = req.body.id;
