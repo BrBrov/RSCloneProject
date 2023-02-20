@@ -54,16 +54,6 @@ router.get('/assets/svg/hi.svg', (req, res) => {
 	})
 });
 
-router.get('/assets/svg/autirized.svg', (req, res) => {
-	let file = path.join(__dirname, '..', './dist/assets/svg/autorized.svg');
-	res.sendFile(file, (err) => {
-		if (err) {
-			res.status('404');
-			res.send(`Not found ${err.message}`);
-		}
-	})
-});
-
 router.get('/assets/svg/key.svg', (req, res) => {
 	let file = path.join(__dirname, '..', './dist/assets/svg/key.svg');
 	res.sendFile(file, (err) => {
@@ -235,4 +225,15 @@ router.get('/assets/img/rock.jpg', (req, res) => {
 		}
 	})
 });
+
+router.get('/assets/svg/autorized.svg', (req, res) => {
+	let file = path.join(__dirname, '..', './dist/assets/svg/autorized.svg');
+	res.sendFile(file, (err) => {
+		if (err) {
+			res.status('404');
+			res.send(`Not found ${err.message}`);
+		}
+	})
+});
+
 module.exports = router;
