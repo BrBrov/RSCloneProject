@@ -33,4 +33,4 @@ app.use('/style', genre);
 
 app.use('/rate', rate);
 
-app.listen(port, host, () => console.log(`Server on localhost:${port}`));
+app.listen(port, () => console.log(`Server on localhost:${port}`));
