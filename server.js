@@ -11,7 +11,6 @@ const genre = require('./route/genre');
 const rate = require('./route/rate');
 const app = express();
 
-// const host = '127.0.0.1';
 const port = 8080 || process.env;
 
 app.use('', start);
@@ -34,4 +33,4 @@ app.use('/style', genre);
 
 app.use('/rate', rate);
 
-app.listen(port, () => console.log(`Server on localhost:${port}`));
+app.listen(port, host, () => console.log(`Server on localhost:${port}`));

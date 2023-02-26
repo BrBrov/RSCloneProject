@@ -6,7 +6,6 @@ const chifer = require('../util/crypto');
 const register = require('../util/register');
 const apiKey = require('../util/apikey');
 
-
 let key;
 let iv;
 

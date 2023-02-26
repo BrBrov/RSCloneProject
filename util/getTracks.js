@@ -17,8 +17,6 @@ async function getTracks(limit, page) {
 
 	const tracks = await cursorData.toArray();
 
-
-
 	await client.close();
 	return tracks;
 }

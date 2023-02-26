@@ -9,7 +9,7 @@ async function getPls(user, token) {
 	const userDB = db.collection('dbUser');
 	const musicDB = db.collection('dbMusic');
 
-	const userData = await userDB.findOne({"login": `qqq`, "apiKey": `12196210851313013683231112176474456123`});
+	const userData = await userDB.findOne({"login": user, "apiKey": token});
 
 	if (!userData) {
 		client.close();
