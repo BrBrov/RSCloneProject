@@ -11,7 +11,7 @@ const genre = require('./route/genre');
 const rate = require('./route/rate');
 const app = express();
 
-const port = 8080 || process.env;
+const port = 8080;
 
 app.use('', start);
 
