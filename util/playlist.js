@@ -11,8 +11,6 @@ async function getPls(user, token) {
 
 	const userData = await userDB.findOne({"login": user, "apiKey": token});
 
-	console.log(userData);
-
 	if (!userData) {
 		client.close();
 		return null;
