@@ -9,7 +9,7 @@ async function getPls(user, token) {
 	const userDB = db.collection('dbUser');
 	const musicDB = db.collection('dbMusic');
 
-	const userData = await userDB.findOne({"login": user, "apiKey": token});
+	const userData = await userDB.findOne({ "login": user, "apiKey": token });
 
 	if (!userData) {
 		client.close();
@@ -21,7 +21,7 @@ async function getPls(user, token) {
 	let pls = await plsDB.findOne({ id: idPls });
 
 	if (!pls) {
-		 pls = await plsDB.updateOne({id: idPls}, {$set:{tracks: [], songsID: []}});
+		pls = await plsDB.updateOne({ id: idPls }, { $set: { tracks: [], songsID: [] } });
 	}
 
 	return pls;
@@ -115,21 +115,21 @@ async function deleteTrack(user, token, idTrack) {
 			return item;
 		}
 	});
-	
-	const songsIDArr = plsData.songsID.filter(id => {		
-		if (id !== Number(idTrack)) {			
+
+	const songsIDArr = plsData.songsID.filter(id => {
+		if (id !== Number(idTrack)) {
 			return id;
 		}
-	});	
+	});
 
-	let pls = await plsDB.updateOne({id: userData.user}, {$set:{tracks: tracksArr, songsID: songsIDArr}});
+	let pls = await plsDB.updateOne({ id: userData.user }, { $set: { tracks: tracksArr, songsID: songsIDArr } });
 
 	if (!pls) {
 		client.close();
 		return null;
 	}
 
-	pls = await plsDB.findOne({id: userData.user});
+	pls = await plsDB.findOne({ id: userData.user });
 
 	client.close();
 	return pls;
@@ -155,7 +155,7 @@ async function deletePls(user, token) {
 		return false;
 	}
 
-	const result = await plsDB.deleteOne({id: plsData.id});
+	const result = await plsDB.deleteOne({ id: plsData.id });
 	client.close();
 	return result;
 }
