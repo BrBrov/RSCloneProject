@@ -44,6 +44,16 @@ router.get('/assets/svg/search.svg', (req, res) => {
 	})
 });
 
+router.get('/assets/svg/favicon.svg', (req, res) => {
+	let file = path.join(__dirname, '..', './dist/assets/svg/favicon.svg');
+	res.sendFile(file, (err) => {
+		if (err) {
+			res.status('404');
+			res.send(`Not found ${err.message}`);
+		}
+	})
+});
+
 router.get('/assets/svg/hi.svg', (req, res) => {
 	let file = path.join(__dirname, '..', './dist/assets/svg/hi.svg');
 	res.sendFile(file, (err) => {
@@ -95,16 +105,6 @@ router.get('/assets/svg/low.svg', (req, res) => {
 	})
 });
 
-router.get('/assets/svg/next.svg', (req, res) => {
-	let file = path.join(__dirname, '..', './dist/assets/svg/next.svg');
-	res.sendFile(file, (err) => {
-		if (err) {
-			res.status('404');
-			res.send(`Not found ${err.message}`);
-		}
-	})
-});
-
 router.get('/assets/svg/play.svg', (req, res) => {
 	let file = path.join(__dirname, '..', './dist/assets/svg/play.svg');
 	res.sendFile(file, (err) => {
@@ -117,16 +117,6 @@ router.get('/assets/svg/play.svg', (req, res) => {
 
 router.get('/assets/svg/playlist.svg', (req, res) => {
 	let file = path.join(__dirname, '..', './dist/assets/svg/playlist.svg');
-	res.sendFile(file, (err) => {
-		if (err) {
-			res.status('404');
-			res.send(`Not found ${err.message}`);
-		}
-	})
-});
-
-router.get('/assets/svg/prev.svg', (req, res) => {
-	let file = path.join(__dirname, '..', './dist/assets/svg/prev.svg');
 	res.sendFile(file, (err) => {
 		if (err) {
 			res.status('404');
