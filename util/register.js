@@ -23,6 +23,16 @@ async function register(id, pass, login) {
     apiKey: ''
   })
 
+	const plsDB = db.collection('dbPls');
+
+	const emptyPls = {
+		"id": `${id}`,
+    "tracks": [],
+    "songsID": []
+	};
+
+	await plsDB.insertOne(emptyPls);
+	
   await client.close();
   return true;
 }

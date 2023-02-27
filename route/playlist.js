@@ -10,14 +10,15 @@ router.route('')
 
 		const playlist = await pls.getPls(user, token);
 		if (!playlist) {
-			if (playlist === null) {
+			if (playlist !== null) {
 				res.status(500);
-				res.json({ pls: 'Internal server error!' });
+				res.json({ pls: 'Playlist is apson!' });
 				return;
 			}
 
 			res.status(404);
 			res.json({ pls: 'Not found!' });
+			return;
 		}
 
 		res.status(200);
