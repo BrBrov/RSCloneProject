@@ -18,11 +18,10 @@ async function getPls(user, token) {
 
 	const idPls = userData.user;
 
-	const pls = await plsDB.findOne({ id: idPls });
+	let pls = await plsDB.findOne({ id: idPls });
 
 	if (!pls) {
-		client.close();
-		return false;
+		 pls = await plsDB.updateOne({id: idPls}, {$set:{tracks: [], songsID: []}});
 	}
 
 	return pls;
