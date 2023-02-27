@@ -65,7 +65,6 @@ router.get('/assets/svg/hi.svg', (req, res) => {
 });
 
 router.get('/assets/svg/autorized.svg', (req, res) => {
-	console.log(req.accepted);
 	let file = path.join(__dirname, '..', './dist/assets/svg/autorized.svg');
 	res.sendFile(file, (err) => {
 		if (err) {
