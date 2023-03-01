@@ -67,7 +67,7 @@
 ### Get random tracks with genre sorting
 #### Reguest GET on /style?genre=<name of genre>&page=<number page>&limit=<number limit>
 #### Response JSON
-#### Header cpunt: <all count genre songs in number>
+#### Header count: <all count genre songs in number>
 
 ### Search
 #### Reguest GET on /search?string = <query search>
